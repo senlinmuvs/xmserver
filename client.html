@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试页面</title>
+</head>
+<body>
+    <h1>登录</h1>
+    <form action="/login" method="POST">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="submit">登录</button>
+    </form>
+
+    <h1>上传文件</h1>
+    <form action="/upfile" method="POST" enctype="multipart/form-data">
+        <input type="file" name="files" multiple><br><br>
+        <button type="submit">上传文件</button>
+    </form>
+</body>
+</html>
