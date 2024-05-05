@@ -37,9 +37,9 @@ func main() {
 	// r.Static("/uploads", "./uploads")
 	// // 启用静态文件托管
 	// r.StaticFile("/", "client.html")
-
 	// 启动服务器
-	r.RunTLS(fmt.Sprintf(":%d", com.Cfg.XMS.Port), com.Cfg.SSL.Cert, com.Cfg.SSL.Key)
+	fmt.Println(com.Cfg.XMS.SSL.Cert, com.Cfg.XMS.SSL.Key)
+	r.RunTLS(fmt.Sprintf(":%d", com.Cfg.XMS.Port), com.Cfg.XMS.SSL.Cert, com.Cfg.XMS.SSL.Key)
 }
 
 func ErrorHandler() gin.HandlerFunc {

@@ -18,10 +18,10 @@ type Config struct {
 	XMS struct {
 		Port    int
 		DataDir string
-	}
-	SSL struct {
-		Key  string
-		Cert string
+		SSL     struct {
+			Key  string
+			Cert string
+		}
 	}
 }
 
