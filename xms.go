@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"time"
 	"xmserver/com"
 	"xmserver/dao"
 	"xmserver/util"
@@ -33,15 +32,14 @@ func main() {
 	r.POST("/drecord", AuthMiddleware(), delRecord)
 	r.POST("/dfile", AuthMiddleware(), delFile)
 	r.POST("/downfile", AuthMiddleware(), downfile)
-	r.POST("/test", test)
 	// r.POST("/downrecord", AuthMiddleware(), downrecord)
 	// // 设置静态文件路由
 	// r.Static("/uploads", "./uploads")
 	// // 启用静态文件托管
-	r.StaticFile("/", "client.html")
+	// r.StaticFile("/", "client.html")
 
 	// 启动服务器
-	r.RunTLS(fmt.Sprintf(":%d", com.Cfg.XMS.Port), "cert.pem", "key.pem")
+	r.RunTLS(fmt.Sprintf(":%d", com.Cfg.XMS.Port), com.Cfg.SSL.Cert, com.Cfg.SSL.Key)
 }
 
 func ErrorHandler() gin.HandlerFunc {
@@ -196,9 +194,7 @@ func downfile(c *gin.Context) {
 	// 发送文件
 	c.File(filePath)
 }
-func test(c *gin.Context) {
-	time.Sleep(10 * time.Second)
-}
+
 func findUser(cid int, user, pwd string) *com.User {
 	for _, u := range com.Users {
 		if u.CID == cid && u.User == user && u.Pwd == pwd {

@@ -1,3 +1,6 @@
 xms:
   port: 443
   datadir: /Users/sen/datas
+  ssl:
+    key: key.pem
+    cert: cert.pem

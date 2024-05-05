@@ -19,6 +19,10 @@ type Config struct {
 		Port    int
 		DataDir string
 	}
+	SSL struct {
+		Key  string
+		Cert string
+	}
 }
 
 type User struct {
