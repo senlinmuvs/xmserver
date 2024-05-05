@@ -16,7 +16,7 @@ import (
 
 func init() {
 	com.InitConfig()
-	dao.InitDao(com.Cfg.XMS.DataDir, "xms.db")
+	dao.InitDao("xms.db")
 }
 
 func main() {

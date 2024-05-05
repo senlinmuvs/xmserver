@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"xmserver/com"
 )
 
 var (
@@ -11,16 +12,16 @@ var (
 	userDBS = map[string]*sql.DB{}
 )
 
-func InitDao(userDbDir, sysDbFile string) {
-	db = connectDatabase(sysDbFile)
-	fileInfos, err := os.ReadDir(userDbDir)
+func InitDao(sysDbFile string) {
+	db = connectDatabase(com.Cfg.XMS.DataDir + "/" + sysDbFile)
+	fileInfos, err := os.ReadDir(com.Cfg.XMS.DataDir)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, fileInfo := range fileInfos {
 		if fileInfo.IsDir() {
 			u := fileInfo.Name()
-			userDbFile := userDbDir + "/" + u + "/xxmoon.data"
+			userDbFile := com.Cfg.XMS.DataDir + "/" + u + "/xxmoon.data"
 			d, e := sql.Open("sqlite3", userDbFile)
 			if e != nil {
 				log.Fatal(e, "db open fail1", userDbFile)
