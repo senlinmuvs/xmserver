@@ -57,7 +57,8 @@ var (
 	}
 )
 
-func InitConfig(file string) {
+func InitConfig(confDir string) {
+	file := confDir + "/config.yml"
 	data, err := os.ReadFile(file)
 	if err != nil {
 		log.Fatalf("无法读取配置文件: %v", err)
@@ -67,10 +68,10 @@ func InitConfig(file string) {
 		log.Fatalf("无法解析配置文件: %v", err)
 	}
 
-	initUserConfig()
+	initUserConfig(confDir)
 }
-func initUserConfig() {
-	file, err := os.Open("user")
+func initUserConfig(confDir string) {
+	file, err := os.Open(confDir + "/user")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
