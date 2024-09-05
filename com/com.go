@@ -57,8 +57,8 @@ var (
 	}
 )
 
-func InitConfig() {
-	data, err := os.ReadFile("config.yml")
+func InitConfig(file string) {
+	data, err := os.ReadFile(file)
 	if err != nil {
 		log.Fatalf("无法读取配置文件: %v", err)
 	}

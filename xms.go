@@ -15,7 +15,11 @@ import (
 )
 
 func init() {
-	com.InitConfig()
+	configFile := "config.yml"
+	if len(os.Args) > 0 {
+		com.InitConfig(os.Args[0])
+	}
+	com.InitConfig(configFile)
 	dao.InitDao("xms.db")
 }
 
