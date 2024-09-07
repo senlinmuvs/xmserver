@@ -14,6 +14,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+const VERSION = "1.0.0"
+
 func init() {
 	configDir := ""
 	if len(os.Args) > 1 {
@@ -42,7 +44,7 @@ func main() {
 	// // 启用静态文件托管
 	// r.StaticFile("/", "client.html")
 	// 启动服务器
-	fmt.Println(com.Cfg.XMS.SSL.Cert, com.Cfg.XMS.SSL.Key)
+	log.Println("XMS", VERSION, "start")
 	r.RunTLS(fmt.Sprintf(":%d", com.Cfg.XMS.Port), com.Cfg.XMS.SSL.Cert, com.Cfg.XMS.SSL.Key)
 }
 
@@ -150,9 +152,13 @@ func delRecord(c *gin.Context) {
 func delFile(c *gin.Context) {
 	user := c.PostForm("user")
 	file := c.PostForm("file")
-	e := os.Remove(com.Cfg.XMS.DataDir + "/" + user + "/" + file)
-	if e != nil {
-		panic(com.Err1("del file err", e))
+	f := com.Cfg.XMS.DataDir + "/" + user + "/" + file
+	_, err := os.Stat(f)
+	if os.IsExist(err) {
+		e := os.Remove(f)
+		if e != nil {
+			panic(com.Err1("del file err", e))
+		}
 	}
 	com.RespOK(c)
 }
