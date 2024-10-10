@@ -40,7 +40,7 @@ func UpsertRecord(user, table, k, v, jsonData string) {
 	var exists bool
 	checkQuery := fmt.Sprintf("SELECT EXISTS(SELECT 1 FROM %s WHERE %s = ?)", table, k)
 	if err := udb.QueryRow(checkQuery, v).Scan(&exists); err != nil {
-		fmt.Println("UpsertRecord error sql", checkQuery, "args", len(args), args)
+		fmt.Println("UpsertRecord error sql", checkQuery, user, table, k, v, "args", len(args), args)
 		panic(com.Err1("UpsertRecord error checking if record exists", err))
 	}
 
@@ -49,14 +49,14 @@ func UpsertRecord(user, table, k, v, jsonData string) {
 		args = append(args, v)
 		_, err := udb.Exec(updateQuery, args...)
 		if err != nil {
-			fmt.Println("UpsertRecord error sql", updateQuery, "args", len(args), args)
+			fmt.Println("UpsertRecord error sql", updateQuery, user, table, k, v, "args", len(args), args)
 			panic(com.Err1("UpsertRecord error executing update query", err))
 		}
 	} else {
 		insertQuery := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", table, fields, values)
 		_, err := udb.Exec(insertQuery, args...)
 		if err != nil {
-			fmt.Println("UpsertRecord error sql", insertQuery, "args", len(args), args)
+			fmt.Println("UpsertRecord error sql", insertQuery, user, table, k, v, "args", len(args), args)
 			panic(com.Err1("UpsertRecord error executing insert query", err))
 		}
 	}
